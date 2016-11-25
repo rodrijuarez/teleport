@@ -59,6 +59,7 @@ static TPRemoteOperationsController * _remoteOperationsController = nil;
 
 - (void)sendEvent:(NSEvent *)event
 {
+	NSLog(@"sendEvent TPRemoteOperationsController");
 	BOOL sendToSuper = YES;
 	
 	DebugLog(@"sendEvent: %@ (%d)", event, (int)[event type]);
@@ -111,6 +112,7 @@ static TPRemoteOperationsController * _remoteOperationsController = nil;
 
 - (void)_sendModifierEventWithKeyCode:(unsigned short)keyCode
 {
+	NSLog(@"_sendModifierEventWithKeyCode TPRemoteOperationsController");
 	NSEvent * modifierEvent = [NSEvent keyEventWithType:NSFlagsChanged location:NSZeroPoint modifierFlags:0 timestamp:0 windowNumber:0 context:NULL characters:NULL charactersIgnoringModifiers:NULL isARepeat:NO keyCode:keyCode];
 	[self _sendEventToListener:modifierEvent];
 }
@@ -133,7 +135,7 @@ static TPRemoteOperationsController * _remoteOperationsController = nil;
 	_eventCatcherWindow = [[TPEventCatcherWindow alloc] initWithContentRect:frame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
 	[_eventCatcherWindow setEventDelegate:self];
 	[_eventCatcherWindow makeKeyAndOrderFront:self];
-	[NSApp setEventDelegate:self];
+	[NSApp setDelegate:self];
 
 	/* Send events for currently down modifiers */
 	NSEventModifierFlags modifiers = [NSEvent modifierFlags];
@@ -151,7 +153,7 @@ static TPRemoteOperationsController * _remoteOperationsController = nil;
 
 - (void)_stopGettingEvents
 {
-	[NSApp setEventDelegate:nil];
+	[NSApp setDelegate:nil];
 	[_eventCatcherWindow close];
 	_eventCatcherWindow = nil;
 	
@@ -172,6 +174,7 @@ static TPRemoteOperationsController * _remoteOperationsController = nil;
 
 - (BOOL)applicationWillSendEvent:(NSEvent*)event
 {
+	NSLog(@"applicationWillSendEvent TPRemoteOperationsController");
 	switch([event type]) {
 		case NSLeftMouseDown:
 		case NSLeftMouseUp:
@@ -347,6 +350,7 @@ static TPRemoteOperationsController * _remoteOperationsController = nil;
 
 - (void)_postEventWithEventData:(NSData*)eventData
 {
+	NSLog(@"_postEventWithEventData");
 	int pos = 0;
 	
 	int swappedEventType;

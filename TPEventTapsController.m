@@ -54,6 +54,7 @@ static const char * eventTypeName[] =
 
 static CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *refcon)
 {
+	NSLog(@"eventCallback TPEventTapsController");
 	TPEventTapsController * self = (__bridge TPEventTapsController*)refcon;
 	
 #if DEBUG_EVENTTAP
@@ -67,7 +68,7 @@ static CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type, CGEvent
 		[self _sendEventToListener:(__bridge id)event];
 	}
 	
-	return NULL;
+	return NUL\L;
 }
 
 + (NSString*)_eventNameFromType:(CGEventType)type
@@ -86,6 +87,7 @@ static CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type, CGEvent
 
 - (void)_startGettingEventsOnScreen:(NSScreen*)screen
 {
+	NSLog(@"TPEventTapsController )_startGettingEventsOnScreen");
 #if DISABLE_CONTROL
 	return;
 #endif
@@ -152,6 +154,7 @@ static CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type, CGEvent
 
 - (void)_sendEventToListener:(id)event
 {
+	NSLog(@"TP Event Taps Controller_sendEventToListener");
 	if(CGEventTapIsEnabled(_eventPort)) {
 		[super _sendEventToListener:event];
 	}
@@ -204,6 +207,7 @@ static CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type, CGEvent
 
 - (void)_postEvent:(CGEventRef)event
 {
+	NSLog(@"postEvent EventTapsController");
 	CGEventSetTimestamp(event, CGSCurrentEventTimestamp());
 //	CGEventSourceStateID sourceState = CGEventSourceGetSourceStateID(_eventSource);
 //	CGEventFlags flags = CGEventSourceFlagsState(sourceState);
@@ -216,6 +220,7 @@ static CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type, CGEvent
 		CGEventSetSource(event, _eventSource);
 	}
 	
+	NSLog(@"acaaaaa");
 	CGEventPost(kCGSessionEventTap, event);
 //	DebugLog(@"after source flags=%lld", CGEventSourceFlagsState(sourceState));
 }
@@ -357,6 +362,7 @@ static CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type, CGEvent
 
 - (void)_postEventWithEventData:(NSData*)eventData
 {
+	NSLog(@"_postEventWithEventData TPEventTapsController");
 	int pos = 0;
 	bool down = false;
 	
@@ -596,6 +602,7 @@ static CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type, CGEvent
 
 - (BOOL)event:(NSEvent*)event hasRequiredKeyIfNeeded:(BOOL)needed withTag:(NSEventType)tag
 {
+	NSLog(@"- (BOOL)event:(NSEvent*)event hasRequiredKeyIfNeeded:(BOOL)needed withTag:(NSEventType)tag");
 	if(_eventSource == NULL)
 		return [super event:event hasRequiredKeyIfNeeded:needed withTag:tag];
 	else {

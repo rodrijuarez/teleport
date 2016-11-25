@@ -201,6 +201,8 @@
 		return;
 	}
 	
+	NSLog(@"aca estoy entrando cuando recibo data");
+	
 	[_msgBuffer appendData:data];
 	
 	BOOL cont = YES;

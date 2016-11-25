@@ -30,6 +30,7 @@
 
 + (TPEventsController*)eventsControllerForRemoteHost:(TPRemoteHost*)remoteHost
 {
+	NSLog(@"eventsControllerForRemoteHost");
 	if([[TPLocalHost localHost] pairWithHost:remoteHost hasCapability:TPHostDirectEventTapsCapability]) {
 		SInt32 localMajorVersion = [[TPLocalHost localHost] osVersion] & 0xFFF0;
 		SInt32 remoteMajorVersion = [remoteHost osVersion] & 0xFFF0;
@@ -63,6 +64,7 @@
 
 - (void)_sendEventToListener:(id)event
 {
+	NSLog(@"_sendEventToListener 1 1 1");
 	id<TPEventsListener> eventsListener = [self eventsListener];
 	
 	if((_lastPostedEventDate == 0.0) && [self _shouldSkipFirstEvent:event]) {
@@ -147,6 +149,7 @@
 
 - (void)_postEventWithEventData:(NSData*)eventData
 {
+	NSLog(@"TPEventsController postEventWithEventData");
 	// overloaded
 }
 

@@ -125,11 +125,14 @@ static TPConnectionsManager * _connectionsManager = nil;
 - (void)connection:(TPNetworkConnection*)connection receivedMessage:(TPMessage*)message
 {
 	PRINT_ME;
+	NSLog(@"receivedMessage");
 	if([message msgType] == TPIdentificationMsgType) {
+		NSLog(@"if([message msgType] == TPIdentificationMsgType) { tpconnections manager");
 		NSDictionary * infoDict = [message infoDict];
 		int protocolVersion = [infoDict[TPMsgProtocolVersionKey] intValue];
 		
 		if(protocolVersion == PROTOCOL_VERSION) {
+			NSLog(@"protocol VERSION ConnectionsManager");
 			NSData * hostData = infoDict[TPMsgHostDataKey];
 			TPRemoteHost * remoteHost = [[TPHostsManager defaultManager] updatedHostFromData:hostData];
 			
@@ -138,6 +141,7 @@ static TPConnectionsManager * _connectionsManager = nil;
 			[[TPConnectionsManager manager] _socketConnection:self succeededWithNetworkConnection:connection];
 		}
 		else {
+			NSLog(@"ns alert with message");
 			NSAlert * alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Wrong protocol version", @"Invalid protocol error title") defaultButton:NSLocalizedString(@"OK", nil) alternateButton:nil otherButton:nil informativeTextWithFormat:NSLocalizedString(@"The Mac you tried to control is using teleport protocol v%d, but you're using v%d.", @"Invalid protocol error message"), protocolVersion, PROTOCOL_VERSION];
 			[(TPMainController*)[NSApp delegate] presentAlert:alert];
 			
@@ -145,6 +149,7 @@ static TPConnectionsManager * _connectionsManager = nil;
 		}
 	}
 	else {
+		NSLog(@"received invalid");
 		NSLog(@"received invalid msg type: %ld (expected identification - %ld)", [message msgType], (long)TPIdentificationMsgType);
 		
 		[[TPConnectionsManager manager] _socketConnectionFailed:self];
@@ -301,10 +306,12 @@ static TPConnectionsManager * _connectionsManager = nil;
 - (void)connection:(TPNetworkConnection*)connection receivedMessage:(TPMessage*)message
 {
 	if([message msgType] == TPIdentificationMsgType) {
+		NSLog(@"TPIdentificationMsgType");
 		NSDictionary * infoDict = [message infoDict];
 		int protocolVersion = [infoDict[TPMsgProtocolVersionKey] intValue];
 		
 		if(protocolVersion == PROTOCOL_VERSION) {
+			NSLog(@"protocol");
 			NSData * hostData = infoDict[TPMsgHostDataKey];
 			TPRemoteHost * remoteHost = [[TPHostsManager defaultManager] updatedHostFromData:hostData];
 			

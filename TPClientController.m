@@ -588,6 +588,7 @@ void TPSleepCallback(void * refCon, io_service_t service, natural_t messageType,
 
 - (void)gotEventWithEventData:(NSData*)eventData
 {
+	NSLog(@"gotEventWithEventData");
 	//DebugLog(@"got event with event data (%d)", [eventData length]);
 	[[self currentConnection] sendMessage:[TPMessage messageWithType:TPEventMsgType andData:eventData]];
 }
@@ -641,6 +642,7 @@ void TPSleepCallback(void * refCon, io_service_t service, natural_t messageType,
 #if DEBUG_GENERAL
 	DebugLog(@"master receive msg %ld", type);
 #endif
+	NSLog(@"tpnetworkconnection");
 	switch(type) {
 		case TPControlSuccessMsgType:
 			[self startControl];

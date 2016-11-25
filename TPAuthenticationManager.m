@@ -122,6 +122,7 @@ static BOOL TPCertificateEqual(SecCertificateRef cert1Ref, SecCertificateRef cer
 
 - (void)connection:(TPNetworkConnection*)connection receivedMessage:(TPMessage*)message
 {
+	NSLog(@"received tpauthenticationmanager");
 	TPMsgType type = [message msgType];
 	TPRemoteHost * host = [connection connectedHost];
 	

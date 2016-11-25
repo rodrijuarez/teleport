@@ -353,16 +353,20 @@ static NSSound * _switchSound = nil;
 
 - (void)connection:(TPNetworkConnection*)connection receivedMessage:(TPMessage*)message
 {
+	NSLog(@"tpconnection controller");
 	TPMsgType type = [message msgType];
 	
 	switch(type) {
 		case TPTransferRequestMsgType:
+			NSLog(@"transfer");
 			[[TPTransfersManager manager] receiveTransferRequestWithInfoDict:[message infoDict] onConnection:connection isClient:[self isKindOfClass:[TPClientController class]]];
 			break;
 		case TPTransferSuccessMsgType:
+			NSLog(@"success");
 			[[TPTransfersManager manager] startTransferWithUID:[message infoDict][TPTransferUIDKey] usingConnection:connection onPort:[[message infoDict][TPTransferPortKey] intValue]];
 			break;
 		case TPTransferFailureMsgType:
+			NSLog(@"failure");
 			[[TPTransfersManager manager] abortTransferWithUID:[message string]];
 			break;
 		default:

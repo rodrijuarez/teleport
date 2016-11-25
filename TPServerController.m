@@ -329,6 +329,7 @@ static TPServerController * _defaultServerController = nil;
 
 - (void)connection:(TPNetworkConnection*)connection receivedMessage:(TPMessage*)message
 {
+	NSLog(@"server controller");
 	TPMsgType type = [message msgType];
 
 #if DEBUG_GENERAL
@@ -338,23 +339,28 @@ static TPServerController * _defaultServerController = nil;
 	switch(type) {
 		case TPControlRequestMsgType:
 		{
+			NSLog(@"TPControlRequestMsgType");
 			[self requestedStartControlByHost:[connection connectedHost] onConnection:connection withInfoDict:[message infoDict]];
 			break;
 		}
 		case TPControlStopMsgType:
 		{
+			NSLog(@"TPControlStopMsgType");
 			[self stopControlWithDisconnect:DISCONNECT_WHEN_STOP_CONTROL];
 			break;
 		}
 		case TPAuthenticationRequestMsgType:
 		{
+			NSLog(@"TPAuthenticationRequestMsgType");
 			[[TPAuthenticationManager defaultManager] authenticationRequestedFromHost:[connection connectedHost] onConnection:connection];
 			break;
 		}
 		case TPEventMsgType:
+			NSLog(@"TPEventMsgType TPServerController");
 			[[self eventsController] postEventWithEventData:[message data]];
 			break;
 		default:
+			NSLog(@"default");
 			[super connection:connection receivedMessage:message];
 	}
 }

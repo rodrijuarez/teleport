@@ -11,10 +11,13 @@
 {
 	BOOL sendToSuper = YES;
 	
-//	DebugLog(@"sendEvent: %@ (%d)", event, [event type]);
+	DebugLog(@"sendEvent: %@ (%lu)", event, (unsigned long)[event type]);
+	
+	NSLog(@"TP Application send event");
 	
 	if(_eventsDelegate != nil && [_eventsDelegate respondsToSelector:@selector(applicationWillSendEvent:)]) {
 		if(![_eventsDelegate applicationWillSendEvent:event])
+			NSLog(@"wont send");
 			sendToSuper = NO;
 	}
 	

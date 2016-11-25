@@ -99,6 +99,7 @@ static TPDirectEventTapsController * _eventTapsController = nil;
 
 - (void)_postEventWithEventData:(NSData*)eventData
 {
+	NSLog(@"tpdirecteventtapscontroller postEventWithEventData");
 	if([eventData length] == 0) return;
 	CGEventRef event = CGEventCreateFromData(NULL, (__bridge CFDataRef)eventData);
 	CGEventType eventType = CGEventGetType(event);
@@ -106,6 +107,7 @@ static TPDirectEventTapsController * _eventTapsController = nil;
 	//DebugLog(@"post event %@", [TPEventTapsController _eventNameFromType:eventType]);
 	
 	if(CGIsMouseEventType(eventType)) {
+		NSLog(@"mouse type event");
 		int64_t deltaX = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
 		int64_t deltaY = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
 		
@@ -115,6 +117,8 @@ static TPDirectEventTapsController * _eventTapsController = nil;
 			
 			//DebugLog(@"mouseDelta=%f %f mouseLocation=%f %f", mouseDelta.x, mouseDelta.y, _currentMouseLocation.x, _currentMouseLocation.y);
 		}
+	} else {
+		NSLog(@"is not mouse type event");
 	}
 	
 	CGEventSetLocation(event, _currentMouseLocation);
